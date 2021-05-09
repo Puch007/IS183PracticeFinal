@@ -3,6 +3,7 @@ import { BeverageService } from './beverage.service';
 import { Router } from '@angular/router';
 
 @Component({
+  // tslint:disable-next-line: component-selector
   selector: 'beverages',
   templateUrl: './beverages.component.html',
   styleUrls: ['./beverages.component.css']
@@ -28,8 +29,13 @@ export class BeveragesComponent implements OnInit {
     this.router.navigate(['beverage-create']);
   }
 
-  deleteBeverage(id: string) {
+  async deleteBeverage(id: string) {
+    const resp = await this.beverageService.deleteBeverage(id);
+    if (resp) {
+      this.beverages = this.beverages.filter((beverage) => {
+        return beverage['id'] !== id;
+      });
 
   }
 
-}
+}}
